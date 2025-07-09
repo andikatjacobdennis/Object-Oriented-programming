@@ -284,3 +284,177 @@ Moved point: (3, 3)
 Default point: (0, 0)
 ```
 
+# Difference Between Class and Interface in C#
+
+| Feature                  | **Class**                                                                                             | **Interface**                                                                                                                |
+| ------------------------ | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Definition**           | A blueprint for creating objects that can contain **fields, methods, constructors, properties**, etc. | A contract that defines **method and property signatures only** (no implementation unless using default methods in C# 8.0+). |
+| **Implementation**       | Can be instantiated (if not abstract).                                                                | Cannot be instantiated; must be implemented by a class or struct.                                                            |
+| **Members**              | Can contain fields, constructors, methods (with or without implementation), properties, events, etc.  | Can contain only **method/property/event/indexer signatures** (until C# 8.0+ added default implementations).                 |
+| **Access Modifiers**     | Can use `public`, `private`, `protected`, etc.                                                        | Members are **public** by default; modifiers are not allowed.                                                                |
+| **Inheritance**          | Supports **single inheritance** (a class can inherit from one class).                                 | Supports **multiple inheritance** (a class can implement multiple interfaces).                                               |
+| **Constructors**         | Can define constructors.                                                                              | Cannot define constructors.                                                                                                  |
+| **Fields**               | Can contain fields (variables).                                                                       | Cannot contain instance fields.                                                                                              |
+| **Abstract vs Concrete** | Can be abstract or concrete.                                                                          | Always abstract (unless using default implementations).                                                                      |
+| **Use Case**             | Used to define the full behavior/state of an object.                                                  | Used to define **capabilities** or **contracts** that multiple classes can share.                                            |
+
+## Code Example
+
+```csharp
+using System;
+
+namespace ClassVsInterfaceDemo
+{
+    // INTERFACE: Cannot have implementation before C# 8, but allowed now (with default methods)
+    interface IVehicle
+    {
+        void Start();
+        void Stop();
+    }
+
+    // ANOTHER INTERFACE: for multiple inheritance
+    interface IElectric
+    {
+        void Charge();
+        int BatteryLevel { get; set; }
+    }
+
+    // BASE CLASS: can contain fields, constructors, methods, etc.
+    class Vehicle
+    {
+        public string Brand;
+        protected int Speed;
+
+        public Vehicle(string brand)
+        {
+            Brand = brand;
+            Speed = 0;
+        }
+
+        public void Accelerate(int increment)
+        {
+            Speed += increment;
+            Console.WriteLine($"{Brand} accelerated to {Speed} km/h.");
+        }
+
+        public void Brake()
+        {
+            Speed = 0;
+            Console.WriteLine($"{Brand} stopped.");
+        }
+    }
+
+    // DERIVED CLASS: inherits from one base class and implements multiple interfaces
+    class ElectricCar : Vehicle, IVehicle, IElectric
+    {
+        public int BatteryLevel { get; set; }
+
+        // Constructor calls base class constructor
+        public ElectricCar(string brand) : base(brand)
+        {
+            BatteryLevel = 100;
+        }
+
+        // Implementing interface methods
+        public void Start()
+        {
+            Console.WriteLine($"{Brand} is starting silently...");
+        }
+
+        public void Stop()
+        {
+            Console.WriteLine($"{Brand} has stopped.");
+        }
+
+        public void Charge()
+        {
+            BatteryLevel = 100;
+            Console.WriteLine($"{Brand} is charging. Battery full.");
+        }
+
+        // Additional method
+        public void ShowStatus()
+        {
+            Console.WriteLine($"Status - Brand: {Brand}, Battery: {BatteryLevel}%");
+        }
+    }
+
+    // Another class implementing only IVehicle
+    class Bicycle : IVehicle
+    {
+        public void Start()
+        {
+            Console.WriteLine("Bicycle ride started.");
+        }
+
+        public void Stop()
+        {
+            Console.WriteLine("Bicycle stopped.");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // === CLASS VS INTERFACE BEHAVIOR ===
+
+            // 1. Class with constructor, fields, methods
+            Vehicle genericVehicle = new Vehicle("Generic");
+            genericVehicle.Accelerate(30);
+            genericVehicle.Brake();
+
+            Console.WriteLine();
+
+            // 2. Class that inherits from another class and implements interfaces
+            ElectricCar tesla = new ElectricCar("Tesla");
+            tesla.Start();                // from IVehicle
+            tesla.Accelerate(60);        // from Vehicle
+            tesla.ShowStatus();
+            tesla.Charge();              // from IElectric
+            tesla.Stop();                // from IVehicle
+
+            Console.WriteLine();
+
+            // 3. Class implementing interface only (no inheritance)
+            Bicycle bike = new Bicycle();
+            bike.Start();
+            bike.Stop();
+
+            Console.WriteLine();
+
+            // 4. Interface cannot be instantiated
+            // IVehicle iv = new IVehicle(); // ❌ Error: cannot create an instance of an interface
+
+            // 5. Multiple interface implementation
+            IVehicle ivTesla = tesla;
+            IElectric ieTesla = tesla;
+            ivTesla.Start();
+            Console.WriteLine($"Battery: {ieTesla.BatteryLevel}%");
+
+            // 6. Fields: Only classes have fields
+            // Interfaces like IVehicle cannot contain fields (but can have properties)
+        }
+    }
+}
+```
+
+## Output
+
+```
+Generic accelerated to 30 km/h.
+Generic stopped.
+
+Tesla is starting silently...
+Tesla accelerated to 60 km/h.
+Status - Brand: Tesla, Battery: 100%
+Tesla is charging. Battery full.
+Tesla has stopped.
+
+Bicycle ride started.
+Bicycle stopped.
+
+Tesla is starting silently...
+Battery: 100%
+```
+
