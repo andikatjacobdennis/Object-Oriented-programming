@@ -8,12 +8,12 @@ Object-Oriented Programming (OOP) is a programming paradigm that organizes code 
 | ----------------- | ---------------------------------------------------- | ------------------------------------------ |
 | **Abstraction**   | Model real-world entities as classes                 | abstract class Animal                      |
 | **Encapsulation** | Hide internal state, use public members              | private string _name; public string Name   |
-| **Inheritance**   | Create new classes from existing ones                | class Dog : Animal`, `class Cat : Animal   |
-| **Polymorphism**  | Same method behaves differently in different classes | Speak()` overridden in `Dog` and `Cat      |
+| **Inheritance**   | Create new classes from existing ones                | class Dog : Animal, class Cat : Animal   |
+| **Polymorphism**  | Same method behaves differently in different classes | Speak() overridden in Dog and Cat      |
 
 ## Repository Contents
 
-* `oops-interview-questions.md` – Interview-ready questions and answers
+* oops-interview-questions.md – Interview-ready questions and answers
 
 ## Getting Started
 
@@ -24,7 +24,7 @@ Object-Oriented Programming (OOP) is a programming paradigm that organizes code 
    cd Object-Oriented-programming
    ```
 
-2. Open the solution or individual `.cs` files in Visual Studio or your preferred C# editor.
+2. Open the solution or individual .cs files in Visual Studio or your preferred C# editor.
 
 3. Run and modify the code to deepen your understanding of OOP in C#.
 
