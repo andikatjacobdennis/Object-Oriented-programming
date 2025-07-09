@@ -1,6 +1,6 @@
 # Types of constructors in C#
 
-### 1. **Default Constructor**
+## 1. **Default Constructor**
 
 * A constructor that takes no parameters.
 * Provided automatically if no constructors are defined.
@@ -15,9 +15,7 @@ class Person
 }
 ```
 
----
-
-### 2. **Parameterized Constructor**
+## 2. **Parameterized Constructor**
 
 * Accepts parameters to initialize fields with custom values.
 
@@ -35,9 +33,7 @@ class Person
 }
 ```
 
----
-
-### 3. **Copy Constructor**
+## 3. **Copy Constructor**
 
 * Initializes a new object as a copy of an existing object.
 * Not provided by default (you must define it manually).
@@ -56,9 +52,7 @@ class Person
 }
 ```
 
----
-
-### 4. **Static Constructor**
+## 4. **Static Constructor**
 
 * Used to initialize static members of the class.
 * Called **only once**, automatically, before any static members are accessed or any instance is created.
@@ -76,9 +70,7 @@ class Config
 }
 ```
 
----
-
-### 5. **Private Constructor**
+## 5. **Private Constructor**
 
 * Used to prevent class instantiation from outside.
 * Common in **singleton patterns** or static classes.
@@ -99,9 +91,7 @@ class Singleton
 }
 ```
 
----
-
-### 6. **Constructor Chaining (Using `this` and `base`)**
+## 6. **Constructor Chaining (Using `this` and `base`)**
 
 * Allows one constructor to call another in the same class or the base class.
 
