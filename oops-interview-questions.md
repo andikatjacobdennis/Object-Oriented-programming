@@ -457,3 +457,182 @@ Bicycle stopped.
 Tesla is starting silently...
 Battery: 100%
 ```
+
+# Demonstrates subtle differences between `override`, `new`, and base class calls
+
+## Code Example
+
+```csharp
+using System;
+
+namespace OOPAdvancedDemo
+{
+    // Abstract Base Class
+    abstract class A
+    {
+        public A()
+        {
+            Console.WriteLine("Constructor A");
+        }
+
+        public abstract void AbstractMethod();
+
+        public virtual void VirtualMethod()
+        {
+            Console.WriteLine("A.VirtualMethod");
+        }
+
+        public void NormalMethod()
+        {
+            Console.WriteLine("A.NormalMethod");
+        }
+
+        public virtual void Show()
+        {
+            Console.WriteLine("A.Show");
+        }
+    }
+
+    // Intermediate Class
+    class B : A
+    {
+        public B()
+        {
+            Console.WriteLine("Constructor B");
+        }
+
+        public override void AbstractMethod()
+        {
+            Console.WriteLine("B.AbstractMethod");
+        }
+
+        public override void VirtualMethod()
+        {
+            Console.WriteLine("B.VirtualMethod (overridden)");
+        }
+
+        public new void NormalMethod() // Method hiding
+        {
+            Console.WriteLine("B.NormalMethod (hidden)");
+        }
+
+        public new virtual void Show() // Hiding A.Show and making virtual again
+        {
+            Console.WriteLine("B.Show (new virtual)");
+        }
+
+        public virtual void OnlyInB()
+        {
+            Console.WriteLine("B.OnlyInB");
+        }
+    }
+
+    // Most Derived Class
+    class C : B
+    {
+        public C()
+        {
+            Console.WriteLine("Constructor C");
+        }
+
+        public override void VirtualMethod()
+        {
+            Console.WriteLine("C.VirtualMethod (overridden)");
+        }
+
+        public new void NormalMethod()
+        {
+            Console.WriteLine("C.NormalMethod (hidden again)");
+        }
+
+        public override void Show()
+        {
+            Console.WriteLine("C.Show (overridden)");
+        }
+
+        public sealed override void OnlyInB()
+        {
+            Console.WriteLine("C.OnlyInB (sealed override)");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== C obj = new C(); ===");
+            C objC = new C(); // Constructor chaining
+
+            Console.WriteLine("\n=== A refA = new C(); ===");
+            A refA = new C();
+
+            Console.WriteLine("\n=== B refB = new C(); ===");
+            B refB = new C();
+
+            Console.WriteLine("\n=== Method Calls ===");
+
+            Console.WriteLine("\nrefA.VirtualMethod():");
+            refA.VirtualMethod();  // Virtual method - resolved at runtime
+
+            Console.WriteLine("\nrefA.Show():");
+            refA.Show();           // A.Show is virtual, B hides it with `new`, but not override, so A.Show is called
+
+            Console.WriteLine("\nrefB.Show():");
+            refB.Show();           // B.Show is virtual (new), C overrides it
+
+            Console.WriteLine("\nobjC.Show():");
+            objC.Show();           // C.Show
+
+            Console.WriteLine("\nrefB.NormalMethod():");
+            refB.NormalMethod();   // B.NormalMethod (hidden from A)
+
+            Console.WriteLine("\n((A)refB).NormalMethod():");
+            ((A)refB).NormalMethod();  // A.NormalMethod
+
+            Console.WriteLine("\nrefB.OnlyInB():");
+            refB.OnlyInB();        // C override (sealed)
+        }
+    }
+}
+```
+## Output
+
+```
+=== C obj = new C(); ===
+Constructor A
+Constructor B
+Constructor C
+
+=== A refA = new C(); ===
+Constructor A
+Constructor B
+Constructor C
+
+=== B refB = new C(); ===
+Constructor A
+Constructor B
+Constructor C
+
+=== Method Calls ===
+
+refA.VirtualMethod():
+C.VirtualMethod (overridden)
+
+refA.Show():
+A.Show
+
+refB.Show():
+C.Show (overridden)
+
+objC.Show():
+C.Show (overridden)
+
+refB.NormalMethod():
+B.NormalMethod (hidden)
+
+((A)refB).NormalMethod():
+A.NormalMethod
+
+refB.OnlyInB():
+C.OnlyInB (sealed override)
+```
