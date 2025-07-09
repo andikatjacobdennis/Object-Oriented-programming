@@ -6,10 +6,10 @@ Object-Oriented Programming (OOP) is a programming paradigm that organizes code 
 
 | Concept           | Microsoft Definition                                 | Animal Example (in C#)                     |
 | ----------------- | ---------------------------------------------------- | ------------------------------------------ |
-| **Abstraction**   | Model real-world entities as classes                 | `abstract class Animal`                    |
-| **Encapsulation** | Hide internal state, use public members              | `private string _name; public string Name` |
-| **Inheritance**   | Create new classes from existing ones                | `class Dog : Animal`, `class Cat : Animal` |
-| **Polymorphism**  | Same method behaves differently in different classes | `Speak()` overridden in `Dog` and `Cat`    |
+| **Abstraction**   | Model real-world entities as classes                 | abstract class Animal                      |
+| **Encapsulation** | Hide internal state, use public members              | private string _name; public string Name   |
+| **Inheritance**   | Create new classes from existing ones                | class Dog : Animal`, `class Cat : Animal   |
+| **Polymorphism**  | Same method behaves differently in different classes | Speak()` overridden in `Dog` and `Cat      |
 
 ## Repository Contents
 
