@@ -7,6 +7,8 @@
 | **Inheritance**   | Build new classes from existing ones to reuse and extend behavior         | Dog and Cat inherit from Animal                     |
 | **Polymorphism**  | Invoke the same method on different types and get type-specific behavior  | Speak() outputs "Woof!" or "Meow!"                  |
 
+## Code Example
+
 ```csharp
 using System;
 
