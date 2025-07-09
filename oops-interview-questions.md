@@ -7,7 +7,7 @@
 | **Inheritance**   | Build new classes from existing ones to reuse and extend behavior         | Dog and Cat inherit from Animal                     |
 | **Polymorphism**  | Invoke the same method on different types and get type-specific behavior  | Speak() outputs "Woof!" or "Meow!"                  |
 
-csharp
+```csharp
 using System;
 
 namespace OOPBasics
@@ -85,6 +85,7 @@ private string \_name;
     }
 
 }
+```
 
 # Types of Inheritance in C#
 
@@ -92,7 +93,7 @@ private string \_name;
 
 A class inherits from one base class.
 
-csharp
+```csharp
 class Animal
 {
 public void Eat() => Console.WriteLine("Eating...");
@@ -102,6 +103,7 @@ class Dog : Animal
 {
 public void Bark() => Console.WriteLine("Barking...");
 }
+```
 
 Dog inherits from Animal.
 
@@ -109,7 +111,7 @@ Dog inherits from Animal.
 
 A class inherits from a derived class (chain of inheritance).
 
-csharp
+```csharp
 class Animal
 {
 public void Eat() => Console.WriteLine("Eating...");
@@ -124,6 +126,7 @@ class Human : Mammal
 {
 public void Speak() => Console.WriteLine("Speaking...");
 }
+```
 
 Human → Mammal → Animal
 
@@ -133,7 +136,7 @@ Human → Mammal → Animal
 
 Multiple classes inherit from a single base class.
 
-csharp
+```csharp
 class Animal
 {
 public void Eat() => Console.WriteLine("Eating...");
@@ -148,6 +151,7 @@ class Cat : Animal
 {
 public void Meow() => Console.WriteLine("Meowing...");
 }
+```
 
 Dog and Cat both inherit from Animal.
 
@@ -156,7 +160,7 @@ Dog and Cat both inherit from Animal.
 C# **does not support** multiple class inheritance (to avoid ambiguity),
 **but it supports multiple interface inheritance**.
 
-csharp
+```csharp
 interface IWalk
 {
 void Walk();
@@ -172,6 +176,7 @@ class Human : IWalk, ITalk
 public void Walk() => Console.WriteLine("Walking...");
 public void Talk() => Console.WriteLine("Talking...");
 }
+```
 
 A class can implement multiple interfaces.
 
@@ -179,7 +184,7 @@ A class can implement multiple interfaces.
 
 Combination of more than one type of inheritance. Not directly supported via classes (due to no multiple inheritance), but possible through **interfaces**.
 
-csharp
+```csharp
 interface IAnimal
 {
 void Eat();
@@ -195,6 +200,7 @@ class Human : IMammal
 public void Eat() => Console.WriteLine("Eating...");
 public void Walk() => Console.WriteLine("Walking...");
 }
+```
 
 # Types of Polymorphism in C#
 
@@ -212,13 +218,14 @@ Also known as **method overloading** or **operator overloading**.
 
 #### Example: Method Overloading
 
-csharp
+```csharp
 class Calculator
 {
 public int Add(int a, int b) => a + b;
 public double Add(double a, double b) => a + b;
 public string Add(string a, string b) => a + b;
 }
+```
 
 #### Example: Operator Overloading
 
@@ -226,7 +233,7 @@ Allows you to redefine operators for user-defined types.
 
 #### 🧪 Example:
 
-csharp
+```csharp
 class Vector
 {
 public int X, Y;
@@ -236,6 +243,7 @@ public Vector(int x, int y) { X = x; Y = y; }
         => new Vector(a.X + b.X, a.Y + b.Y);
 
 }
+```
 
 ## 2. Run-Time Polymorphism (Dynamic Binding)
 
@@ -252,7 +260,7 @@ Also known as **method overriding** using inheritance.
 
 ### Example: Method Overriding
 
-csharp
+```csharp
 class Animal
 {
 public virtual void Speak() => Console.WriteLine("Animal speaks");
@@ -266,13 +274,15 @@ public override void Speak() => Console.WriteLine("Dog barks");
 Animal a = new Dog();
 a.Speak(); // Output: Dog barks
 
+```
+
 ## 3. Interface-Based Polymorphism
 
 Allows different classes to implement the same interface in different ways.
 
 #### 🧪 Example:
 
-csharp
+```csharp
 interface IPrinter
 {
 void Print();
@@ -292,6 +302,7 @@ void PrintDocument(IPrinter printer)
 {
 printer.Print(); // Polymorphic behavior
 }
+```
 
 ---
 
@@ -301,7 +312,7 @@ Delegate types can reference different methods with the same signature.
 
 #### Example:
 
-csharp
+```csharp
 delegate void Greet();
 
 void Hello() => Console.WriteLine("Hello");
@@ -311,6 +322,7 @@ Greet greet = Hello;
 greet(); // Hello
 greet = Welcome;
 greet(); // Welcome
+```
 
 # Types of constructors in C#
 
@@ -319,7 +331,7 @@ greet(); // Welcome
 - A constructor that takes no parameters.
 - Provided automatically if no constructors are defined.
 
-csharp
+```csharp
 class Person
 {
 public Person()
@@ -327,12 +339,13 @@ public Person()
 Console.WriteLine("Default constructor called");
 }
 }
+```
 
 ## 2. **Parameterized Constructor**
 
 - Accepts parameters to initialize fields with custom values.
 
-csharp
+```csharp
 class Person
 {
 public string Name;
@@ -343,15 +356,15 @@ public int Age;
         Name = name;
         Age = age;
     }
-
 }
+```
 
 ## 3. **Copy Constructor**
 
 - Initializes a new object as a copy of an existing object.
 - Not provided by default (you must define it manually).
 
-csharp
+```csharp
 class Person
 {
 public string Name;
@@ -362,8 +375,8 @@ public int Age;
         Name = other.Name;
         Age = other.Age;
     }
-
 }
+```
 
 ## 4. **Static Constructor**
 
@@ -371,7 +384,7 @@ public int Age;
 - Called **only once**, automatically, before any static members are accessed or any instance is created.
 - Cannot take parameters or have access modifiers.
 
-csharp
+```csharp
 class Config
 {
 public static string Setting;
@@ -380,15 +393,15 @@ public static string Setting;
     {
         Setting = "Initialized";
     }
-
 }
+```
 
 ## 5. **Private Constructor**
 
 - Used to prevent class instantiation from outside.
 - Common in **singleton patterns** or static classes.
 
-csharp
+```csharp
 class Singleton
 {
 private static Singleton instance = null;
@@ -401,8 +414,8 @@ private static Singleton instance = null;
             instance = new Singleton();
         return instance;
     }
-
 }
+```
 
 ## 6. **Constructor Chaining (Using this and base)**
 
@@ -410,7 +423,7 @@ private static Singleton instance = null;
 
 **Using this:**
 
-csharp
+```csharp
 class Person
 {
 public string Name;
@@ -423,12 +436,12 @@ public int Age;
         Name = name;
         Age = age;
     }
-
 }
+```
 
 **Using base:**
 
-csharp
+```csharp
 class Animal
 {
 public Animal(string type)
@@ -441,6 +454,7 @@ class Dog : Animal
 {
 public Dog() : base("Dog") { }
 }
+```
 
 # Difference between class and struct
 
@@ -454,7 +468,7 @@ public Dog() : base("Dog") { }
 
 ## Code Example
 
-csharp
+```csharp
 using System;
 
 namespace StructVsClassDemo
@@ -580,8 +594,8 @@ public int Age;
             // - Point lives on the stack (unless boxed or in a class)
         }
     }
-
 }
+```
 
 ## Output
 
@@ -610,7 +624,7 @@ Default point: (0, 0)
 
 ## Code Example
 
-csharp
+```csharp
 using System;
 
 namespace ClassVsInterfaceDemo
@@ -746,8 +760,8 @@ void Stop();
             // Interfaces like IVehicle cannot contain fields (but can have properties)
         }
     }
-
 }
+```
 
 ## Output
 
@@ -770,7 +784,7 @@ Battery: 100%
 
 ## Code Example
 
-csharp
+```csharp
 using System;
 
 namespace OOPAdvancedDemo
@@ -901,8 +915,8 @@ Console.WriteLine("Constructor A");
             refB.OnlyInB();        // C override (sealed)
         }
     }
-
 }
+```
 
 ## Output
 
