@@ -2,8 +2,8 @@
 
 ## 1. **Default Constructor**
 
-* A constructor that takes no parameters.
-* Provided automatically if no constructors are defined.
+- A constructor that takes no parameters.
+- Provided automatically if no constructors are defined.
 
 ```csharp
 class Person
@@ -17,7 +17,7 @@ class Person
 
 ## 2. **Parameterized Constructor**
 
-* Accepts parameters to initialize fields with custom values.
+- Accepts parameters to initialize fields with custom values.
 
 ```csharp
 class Person
@@ -35,8 +35,8 @@ class Person
 
 ## 3. **Copy Constructor**
 
-* Initializes a new object as a copy of an existing object.
-* Not provided by default (you must define it manually).
+- Initializes a new object as a copy of an existing object.
+- Not provided by default (you must define it manually).
 
 ```csharp
 class Person
@@ -54,9 +54,9 @@ class Person
 
 ## 4. **Static Constructor**
 
-* Used to initialize static members of the class.
-* Called **only once**, automatically, before any static members are accessed or any instance is created.
-* Cannot take parameters or have access modifiers.
+- Used to initialize static members of the class.
+- Called **only once**, automatically, before any static members are accessed or any instance is created.
+- Cannot take parameters or have access modifiers.
 
 ```csharp
 class Config
@@ -72,8 +72,8 @@ class Config
 
 ## 5. **Private Constructor**
 
-* Used to prevent class instantiation from outside.
-* Common in **singleton patterns** or static classes.
+- Used to prevent class instantiation from outside.
+- Common in **singleton patterns** or static classes.
 
 ```csharp
 class Singleton
@@ -93,7 +93,7 @@ class Singleton
 
 ## 6. **Constructor Chaining (Using `this` and `base`)**
 
-* Allows one constructor to call another in the same class or the base class.
+- Allows one constructor to call another in the same class or the base class.
 
 **Using `this`:**
 
@@ -132,13 +132,13 @@ class Dog : Animal
 
 # Difference between class and struct
 
-* Structs are **copied by value**, while classes are **referenced by reference**.
-* Structs cannot **inherit** from other structs or classes.
-* Structs cannot have **explicit parameterless constructors**, but they do have an **implicit one**.
-* Structs must be **nullable** to assign `null`.
-* **Boxing/unboxing** is necessary when using structs as objects.
-* Mutating a struct does not affect the original (unless passed by reference).
-* Classes reside on the **heap**, structs on the **stack** (unless boxed or in a class).
+- Structs are **copied by value**, while classes are **referenced by reference**.
+- Structs cannot **inherit** from other structs or classes.
+- Structs cannot have **explicit parameterless constructors**, but they do have an **implicit one**.
+- Structs must be **nullable** to assign `null`.
+- **Boxing/unboxing** is necessary when using structs as objects.
+- Mutating a struct does not affect the original (unless passed by reference).
+- Classes reside on the **heap**, structs on the **stack** (unless boxed or in a class).
 
 ## Code Example
 
@@ -424,7 +424,7 @@ namespace ClassVsInterfaceDemo
             Console.WriteLine();
 
             // 4. Interface cannot be instantiated
-            // IVehicle iv = new IVehicle(); // ❌ Error: cannot create an instance of an interface
+            // IVehicle iv = new IVehicle(); // Error: cannot create an instance of an interface
 
             // 5. Multiple interface implementation
             IVehicle ivTesla = tesla;
@@ -457,4 +457,3 @@ Bicycle stopped.
 Tesla is starting silently...
 Battery: 100%
 ```
-
