@@ -1,4 +1,4 @@
-# Object-Oriented-programming
+# Object Oriented programming
 
 | Concept           | Definition (from Microsoft)                                               | Example with Animals                                |
 | ----------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
