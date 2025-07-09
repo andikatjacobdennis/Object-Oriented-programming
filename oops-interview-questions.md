@@ -1,3 +1,317 @@
+# Object-Oriented-programming
+
+| Concept           | Definition (from Microsoft)                                               | Example with Animals                                |
+| ----------------- | ------------------------------------------------------------------------- | --------------------------------------------------- |
+| **Abstraction**   | Model relevant attributes and behaviors of real-world entities as classes | Animal is an abstract class defining shared methods |
+| **Encapsulation** | Hide internal state; expose access through public members                 | \_name is private, accessed via Name property       |
+| **Inheritance**   | Build new classes from existing ones to reuse and extend behavior         | Dog and Cat inherit from Animal                     |
+| **Polymorphism**  | Invoke the same method on different types and get type-specific behavior  | Speak() outputs "Woof!" or "Meow!"                  |
+
+csharp
+using System;
+
+namespace OOPBasics
+{
+// 1. ABSTRACTION: We define a general class "Animal" that hides internal complexity
+public abstract class Animal
+{
+// 2. ENCAPSULATION: We use private fields with public properties
+private string \_name;
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    _name = value;
+            }
+        }
+
+        // Constructor
+        public Animal(string name)
+        {
+            Name = name;
+        }
+
+        // 4. POLYMORPHISM: This method will be overridden in child classes
+        public abstract void Speak();
+
+        // Common method for all animals
+        public void Eat()
+        {
+            Console.WriteLine($"{Name} is eating.");
+        }
+    }
+
+    // 3. INHERITANCE: Dog inherits from Animal
+    public class Dog : Animal
+    {
+        public Dog(string name) : base(name) { }
+
+        // POLYMORPHISM: Overrides Speak method
+        public override void Speak()
+        {
+            Console.WriteLine($"{Name} says: Woof!");
+        }
+    }
+
+    // Another child class
+    public class Cat : Animal
+    {
+        public Cat(string name) : base(name) { }
+
+        public override void Speak()
+        {
+            Console.WriteLine($"{Name} says: Meow!");
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            // Create a Dog and a Cat (demonstrating polymorphism)
+            Animal myDog = new Dog("Buddy");
+            Animal myCat = new Cat("Whiskers");
+
+            // Call methods
+            myDog.Speak();    // Output: Buddy says: Woof!
+            myDog.Eat();      // Output: Buddy is eating.
+
+            myCat.Speak();    // Output: Whiskers says: Meow!
+            myCat.Eat();      // Output: Whiskers is eating.
+        }
+    }
+
+}
+
+# Types of Inheritance in C#
+
+## 1. Single Inheritance
+
+A class inherits from one base class.
+
+csharp
+class Animal
+{
+public void Eat() => Console.WriteLine("Eating...");
+}
+
+class Dog : Animal
+{
+public void Bark() => Console.WriteLine("Barking...");
+}
+
+Dog inherits from Animal.
+
+## 2. Multilevel Inheritance
+
+A class inherits from a derived class (chain of inheritance).
+
+csharp
+class Animal
+{
+public void Eat() => Console.WriteLine("Eating...");
+}
+
+class Mammal : Animal
+{
+public void Walk() => Console.WriteLine("Walking...");
+}
+
+class Human : Mammal
+{
+public void Speak() => Console.WriteLine("Speaking...");
+}
+
+Human → Mammal → Animal
+
+---
+
+## 3. Hierarchical Inheritance
+
+Multiple classes inherit from a single base class.
+
+csharp
+class Animal
+{
+public void Eat() => Console.WriteLine("Eating...");
+}
+
+class Dog : Animal
+{
+public void Bark() => Console.WriteLine("Barking...");
+}
+
+class Cat : Animal
+{
+public void Meow() => Console.WriteLine("Meowing...");
+}
+
+Dog and Cat both inherit from Animal.
+
+## 4. Multiple Inheritance (via Interfaces)
+
+C# **does not support** multiple class inheritance (to avoid ambiguity),
+**but it supports multiple interface inheritance**.
+
+csharp
+interface IWalk
+{
+void Walk();
+}
+
+interface ITalk
+{
+void Talk();
+}
+
+class Human : IWalk, ITalk
+{
+public void Walk() => Console.WriteLine("Walking...");
+public void Talk() => Console.WriteLine("Talking...");
+}
+
+A class can implement multiple interfaces.
+
+## 5. Hybrid Inheritance (Combination)
+
+Combination of more than one type of inheritance. Not directly supported via classes (due to no multiple inheritance), but possible through **interfaces**.
+
+csharp
+interface IAnimal
+{
+void Eat();
+}
+
+interface IMammal : IAnimal
+{
+void Walk();
+}
+
+class Human : IMammal
+{
+public void Eat() => Console.WriteLine("Eating...");
+public void Walk() => Console.WriteLine("Walking...");
+}
+
+# Types of Polymorphism in C#
+
+## 1. Compile-Time Polymorphism (Static Binding)
+
+Also known as **method overloading** or **operator overloading**.
+
+### Features:
+
+- Resolved at **compile time**
+- Achieved via:
+
+  - **Method Overloading**
+  - **Operator Overloading**
+
+#### Example: Method Overloading
+
+csharp
+class Calculator
+{
+public int Add(int a, int b) => a + b;
+public double Add(double a, double b) => a + b;
+public string Add(string a, string b) => a + b;
+}
+
+#### Example: Operator Overloading
+
+Allows you to redefine operators for user-defined types.
+
+#### 🧪 Example:
+
+csharp
+class Vector
+{
+public int X, Y;
+public Vector(int x, int y) { X = x; Y = y; }
+
+    public static Vector operator +(Vector a, Vector b)
+        => new Vector(a.X + b.X, a.Y + b.Y);
+
+}
+
+## 2. Run-Time Polymorphism (Dynamic Binding)
+
+Also known as **method overriding** using inheritance.
+
+### Features:
+
+- Resolved at **runtime**
+- Achieved via:
+
+  - virtual methods in the base class
+  - override in the derived class
+  - Accessed via base class references
+
+### Example: Method Overriding
+
+csharp
+class Animal
+{
+public virtual void Speak() => Console.WriteLine("Animal speaks");
+}
+
+class Dog : Animal
+{
+public override void Speak() => Console.WriteLine("Dog barks");
+}
+
+Animal a = new Dog();
+a.Speak(); // Output: Dog barks
+
+## 3. Interface-Based Polymorphism
+
+Allows different classes to implement the same interface in different ways.
+
+#### 🧪 Example:
+
+csharp
+interface IPrinter
+{
+void Print();
+}
+
+class Inkjet : IPrinter
+{
+public void Print() => Console.WriteLine("Inkjet printing");
+}
+
+class Laser : IPrinter
+{
+public void Print() => Console.WriteLine("Laser printing");
+}
+
+void PrintDocument(IPrinter printer)
+{
+printer.Print(); // Polymorphic behavior
+}
+
+---
+
+## 4. Polymorphism via Delegates / Func / Action
+
+Delegate types can reference different methods with the same signature.
+
+#### Example:
+
+csharp
+delegate void Greet();
+
+void Hello() => Console.WriteLine("Hello");
+void Welcome() => Console.WriteLine("Welcome");
+
+Greet greet = Hello;
+greet(); // Hello
+greet = Welcome;
+greet(); // Welcome
+
 # Types of constructors in C#
 
 ## 1. **Default Constructor**
@@ -5,52 +319,51 @@
 - A constructor that takes no parameters.
 - Provided automatically if no constructors are defined.
 
-```csharp
+csharp
 class Person
 {
-    public Person()
-    {
-        Console.WriteLine("Default constructor called");
-    }
+public Person()
+{
+Console.WriteLine("Default constructor called");
 }
-```
+}
 
 ## 2. **Parameterized Constructor**
 
 - Accepts parameters to initialize fields with custom values.
 
-```csharp
+csharp
 class Person
 {
-    public string Name;
-    public int Age;
+public string Name;
+public int Age;
 
     public Person(string name, int age)
     {
         Name = name;
         Age = age;
     }
+
 }
-```
 
 ## 3. **Copy Constructor**
 
 - Initializes a new object as a copy of an existing object.
 - Not provided by default (you must define it manually).
 
-```csharp
+csharp
 class Person
 {
-    public string Name;
-    public int Age;
+public string Name;
+public int Age;
 
     public Person(Person other)
     {
         Name = other.Name;
         Age = other.Age;
     }
+
 }
-```
 
 ## 4. **Static Constructor**
 
@@ -58,27 +371,27 @@ class Person
 - Called **only once**, automatically, before any static members are accessed or any instance is created.
 - Cannot take parameters or have access modifiers.
 
-```csharp
+csharp
 class Config
 {
-    public static string Setting;
+public static string Setting;
 
     static Config()
     {
         Setting = "Initialized";
     }
+
 }
-```
 
 ## 5. **Private Constructor**
 
 - Used to prevent class instantiation from outside.
 - Common in **singleton patterns** or static classes.
 
-```csharp
+csharp
 class Singleton
 {
-    private static Singleton instance = null;
+private static Singleton instance = null;
 
     private Singleton() { }
 
@@ -88,20 +401,20 @@ class Singleton
             instance = new Singleton();
         return instance;
     }
-}
-```
 
-## 6. **Constructor Chaining (Using `this` and `base`)**
+}
+
+## 6. **Constructor Chaining (Using this and base)**
 
 - Allows one constructor to call another in the same class or the base class.
 
-**Using `this`:**
+**Using this:**
 
-```csharp
+csharp
 class Person
 {
-    public string Name;
-    public int Age;
+public string Name;
+public int Age;
 
     public Person() : this("Unknown", 0) { }
 
@@ -110,48 +423,47 @@ class Person
         Name = name;
         Age = age;
     }
+
 }
-```
 
-**Using `base`:**
+**Using base:**
 
-```csharp
+csharp
 class Animal
 {
-    public Animal(string type)
-    {
-        Console.WriteLine("Animal: " + type);
-    }
+public Animal(string type)
+{
+Console.WriteLine("Animal: " + type);
+}
 }
 
 class Dog : Animal
 {
-    public Dog() : base("Dog") { }
+public Dog() : base("Dog") { }
 }
-```
 
 # Difference between class and struct
 
 - Structs are **copied by value**, while classes are **referenced by reference**.
 - Structs cannot **inherit** from other structs or classes.
 - Structs cannot have **explicit parameterless constructors**, but they do have an **implicit one**.
-- Structs must be **nullable** to assign `null`.
+- Structs must be **nullable** to assign null.
 - **Boxing/unboxing** is necessary when using structs as objects.
 - Mutating a struct does not affect the original (unless passed by reference).
 - Classes reside on the **heap**, structs on the **stack** (unless boxed or in a class).
 
 ## Code Example
 
-```csharp
+csharp
 using System;
 
 namespace StructVsClassDemo
 {
-    // CLASS EXAMPLE
-    class Person
-    {
-        public string Name;
-        public int Age;
+// CLASS EXAMPLE
+class Person
+{
+public string Name;
+public int Age;
 
         public Person(string name, int age)
         {
@@ -268,12 +580,11 @@ namespace StructVsClassDemo
             // - Point lives on the stack (unless boxed or in a class)
         }
     }
+
 }
-```
 
 ## Output
 
-```
 Struct - p1: (1, 1), p2: (100, 1)
 Class - person1: Bob, person2: Bob
 Woof!
@@ -282,7 +593,6 @@ Struct can be nullable using ?
 Boxed/unboxed struct: (3, 3)
 Moved point: (3, 3)
 Default point: (0, 0)
-```
 
 # Difference Between Class and Interface in C#
 
@@ -291,7 +601,7 @@ Default point: (0, 0)
 | **Definition**           | A blueprint for creating objects that can contain **fields, methods, constructors, properties**, etc. | A contract that defines **method and property signatures only** (no implementation unless using default methods in C# 8.0+). |
 | **Implementation**       | Can be instantiated (if not abstract).                                                                | Cannot be instantiated; must be implemented by a class or struct.                                                            |
 | **Members**              | Can contain fields, constructors, methods (with or without implementation), properties, events, etc.  | Can contain only **method/property/event/indexer signatures** (until C# 8.0+ added default implementations).                 |
-| **Access Modifiers**     | Can use `public`, `private`, `protected`, etc.                                                        | Members are **public** by default; modifiers are not allowed.                                                                |
+| **Access Modifiers**     | Can use public, private, protected, etc.                                                              | Members are **public** by default; modifiers are not allowed.                                                                |
 | **Inheritance**          | Supports **single inheritance** (a class can inherit from one class).                                 | Supports **multiple inheritance** (a class can implement multiple interfaces).                                               |
 | **Constructors**         | Can define constructors.                                                                              | Cannot define constructors.                                                                                                  |
 | **Fields**               | Can contain fields (variables).                                                                       | Cannot contain instance fields.                                                                                              |
@@ -300,17 +610,17 @@ Default point: (0, 0)
 
 ## Code Example
 
-```csharp
+csharp
 using System;
 
 namespace ClassVsInterfaceDemo
 {
-    // INTERFACE: Cannot have implementation before C# 8, but allowed now (with default methods)
-    interface IVehicle
-    {
-        void Start();
-        void Stop();
-    }
+// INTERFACE: Cannot have implementation before C# 8, but allowed now (with default methods)
+interface IVehicle
+{
+void Start();
+void Stop();
+}
 
     // ANOTHER INTERFACE: for multiple inheritance
     interface IElectric
@@ -436,12 +746,11 @@ namespace ClassVsInterfaceDemo
             // Interfaces like IVehicle cannot contain fields (but can have properties)
         }
     }
+
 }
-```
 
 ## Output
 
-```
 Generic accelerated to 30 km/h.
 Generic stopped.
 
@@ -456,24 +765,23 @@ Bicycle stopped.
 
 Tesla is starting silently...
 Battery: 100%
-```
 
-# Demonstrates subtle differences between `override`, `new`, and base class calls
+# Demonstrates subtle differences between override, new, and base class calls
 
 ## Code Example
 
-```csharp
+csharp
 using System;
 
 namespace OOPAdvancedDemo
 {
-    // Abstract Base Class
-    abstract class A
-    {
-        public A()
-        {
-            Console.WriteLine("Constructor A");
-        }
+// Abstract Base Class
+abstract class A
+{
+public A()
+{
+Console.WriteLine("Constructor A");
+}
 
         public abstract void AbstractMethod();
 
@@ -575,7 +883,7 @@ namespace OOPAdvancedDemo
             refA.VirtualMethod();  // Virtual method - resolved at runtime
 
             Console.WriteLine("\nrefA.Show():");
-            refA.Show();           // A.Show is virtual, B hides it with `new`, but not override, so A.Show is called
+            refA.Show();           // A.Show is virtual, B hides it with new, but not override, so A.Show is called
 
             Console.WriteLine("\nrefB.Show():");
             refB.Show();           // B.Show is virtual (new), C overrides it
@@ -593,11 +901,11 @@ namespace OOPAdvancedDemo
             refB.OnlyInB();        // C override (sealed)
         }
     }
+
 }
-```
+
 ## Output
 
-```
 === C obj = new C(); ===
 Constructor A
 Constructor B
@@ -635,4 +943,3 @@ A.NormalMethod
 
 refB.OnlyInB():
 C.OnlyInB (sealed override)
-```
